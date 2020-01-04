@@ -95,3 +95,12 @@ y = ['Yes', 'No', 'Yes']
 labelencoder_y = LabelEncoder()
 y = labelencoder_y.fit_transform(y)
 ```
+
+## Splitting the Dataset into the Training set and Test set
+- Train / Test splitting is done to assess performance and overfitting.
+- Ideally, the performance on the Test set is very similar than the one on the Training set.
+- The test set is usually around 20% to 25% of the whole dataset.
+```python
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+```

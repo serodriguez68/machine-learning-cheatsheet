@@ -40,3 +40,9 @@ X = ct.fit_transform(X)
 from sklearn.preprocessing import LabelEncoder
 labelencoder_y = LabelEncoder()
 y = labelencoder_y.fit_transform(y)
+
+# Splitting the Dataset into the Training set and Test set
+from sklearn.model_selection import train_test_split
+# random_state is fixed here just to make sure the results match the ones in the udemy course,
+# we wouldn't fix a random_state in regular circumstances
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state = 0)
