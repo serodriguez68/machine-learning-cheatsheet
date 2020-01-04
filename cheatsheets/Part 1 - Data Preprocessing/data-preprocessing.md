@@ -64,10 +64,11 @@ Therefore, we need to express categorical data as numbers somehow.
 e.g. France => 0, Spain => 1, UK => 2
 
 **WARNING:** This typically does NOT make sense since it forces the ML algorithms to think that there is some sort
-of order and a sense magnitude between categories. e.g. `France < Spain < UK` and `Spain * 2 = UK`. 
+of order and a sense of magnitude between categories. e.g. `France < Spain < UK` and `Spain * 2 = UK`. 
 
 This _may_ make sense for categorical values that imply some sort of order (like T-shirt sizes), but even under those
-circumstances the sense of magnitude (`small * 3 = large`) is questionable.
+circumstances the sense of magnitude (`small * 3 = large`) is questionable. In this case is probably better just to try
+with the mapping encoding and one-hot encoding and select the one that performs better.
 
 ```python
 from sklearn.preprocessing import LabelEncoder
