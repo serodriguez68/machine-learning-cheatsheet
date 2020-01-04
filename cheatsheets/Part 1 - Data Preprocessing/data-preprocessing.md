@@ -1,11 +1,13 @@
-# Pre-processing Libraries
+# Data Preprocessing
+
+## Pre-processing Libraries
 There are a few critical libraries that are used for data preprocessing and machine learning in general.
 Here is a short summary of those and what they do:
 1. Numpy - Manipulation for multi-dimensional arrays and matrices.
 2. Pandas - Data import and manipulation.
 3. Matplotlib - Data visualization.
 
-# Importing CSV Datasets
+## Importing CSV Datasets
 - We use pandas to import tabular CSV datasets. The imported data is held in
 a pandas `dataframe`.
 - We then split the `dataframe` into _independent_ and _dependent_ variables
@@ -17,14 +19,14 @@ X = dataset.iloc[:, :-1].values  # All Rows, All Columns except last one
 Y = dataset.iloc[:, 3].values
 ```
 
-# Handling Missing Data
+## Handling Missing Data
 Missing data happens very frequently in machine learning. Options for handling missing data are:
 
-1. **Removing the observations with missing data**
+### Removing the observations with missing data
  - Pros: Very simple.
  - Cons: You lose valuable data from other columns.
   
-2. **Replacing numerical missing values with the mean of the column**
+### Replacing numerical missing values with the mean of the column
  - Pros: Simple. Keeps the data from other columns.
  - Cons: A bit arbitrary. Do not use when you have a lot of missing data. Not applicable to categorical data.
  - There are other strategies in addition to `mean` (e.g. `most_frequent`). These other strategies
@@ -38,7 +40,7 @@ imp_mean = SimpleImputer(missing_values=np.nan, strategy='mean')
 X[:, 1:3] = imp_mean.fit_transform(X[:, 1:3])
 ```
 
-3. **Replacing missing values using prediction (Prediction Imputation)**
+### Replacing missing values using prediction (Prediction Imputation)
  - Intuition: 
      - Use your column with missing data as a dependent variable.
      - Split your dataset into 2 sets "Training" and "Missing", where "Training" contains all data __without__ missing values on the
@@ -54,5 +56,42 @@ X[:, 1:3] = imp_mean.fit_transform(X[:, 1:3])
   in both __numerical__ and __categorical__ variables.
   - Cons: It is more complex. You may run into "chicken and egg" issues if you have multiple columns with missing values.
 
-# Encoding Categorical Data
+## Encoding Categorical Data
+**Why we need to do this:**  ML models are based on mathematical models that do not support anything that is not a number.
+Therefore, we need to express categorical data as numbers somehow. 
 
+### Mapping categories to numbers
+e.g. France => 0, Spain => 1, UK => 2
+
+**WARNING:** This typically does NOT make sense since it forces the ML algorithms to think that there is some sort
+of order and a sense magnitude between categories. e.g. `France < Spain < UK` and `Spain * 2 = UK`. 
+
+This _may_ make sense for categorical values that imply some sort of order (like T-shirt sizes), but even under those
+circumstances the sense of magnitude (`small * 3 = large`) is questionable.
+
+```python
+from sklearn.preprocessing import LabelEncoder
+labelencoder_X = LabelEncoder()
+X[:, 0] = labelencoder_X.fit_transform(X[:, 0])
+``` 
+
+### One-hot encoding
+This is typically what should be used with non-binary categorical variables.
+```python
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+ct = ColumnTransformer(
+    [('one_hot_encoder', OneHotEncoder(), [0])],    # The column numbers to be transformed (here is [0] but can be [0, 1, 3])
+    remainder='passthrough'                         # Leave the rest of the columns untouched
+)
+X = ct.fit_transform(X)
+```
+
+### Binary encoding
+When the categorical value is binary (e.g. True, False), then transformation to 0 and 1 is ok.
+```python
+from sklearn.preprocessing import LabelEncoder
+y = ['Yes', 'No', 'Yes']
+labelencoder_y = LabelEncoder()
+y = labelencoder_y.fit_transform(y)
+```
