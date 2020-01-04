@@ -104,3 +104,65 @@ y = labelencoder_y.fit_transform(y)
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 ```
+
+## Feature Scaling
+
+### Motivation
+
+Different numerical variables naturally fall in different scales (e.g. Age <0 to 100> and Salary <0 to millions>). Many ML models are
+based on euclidean distance or weighted linear combination of variables and we don't want one variable to dominate
+the others just because they are on a different scale.
+
+Feature scaling removes the implicit dominance of variables with wider numerical ranges by transforming all
+numerical variables to the same range (typically from -1 to +1).
+
+Even for ML algorithms that are not based on euclidean distance or weighted linear combinations (like decision trees),
+scaling greatly helps convergence speed.
+
+### Scaling Strategies
+
+There are multiple strategies for feature scaling.
+- Normalisation Scaling: use when the variable is normally distributed. 
+- Standardization Scaling: use when data is not normally distributed. When in doubt use standardization scaling.
+
+Scaling is commonly treated as a hyperparameter that is "grid-searched" for performance.
+
+
+### Fit the scaler on the training data only
+
+The scaler must be fit with the **the training set only** (i.e. the scaling parameters must be derived only from
+the training set). The test set and any prediction set must be transformed using the **scaler fitted on the
+training set.**
+
+This is the only way to guarantee that the test set and any predictions are subject to the same conditions
+and have been totally unobserved during the training process.
+
+### Do we need to scale one-hot / dummy variables?
+
+There are mixed opinions on this topic and it really depends on the context and what you are trying to achieve.
+
+- **Scaling:** Mathematically good since all variables are on the same scale. It helps optimize the accuracy of your model.
+However, you lose interpretablity of your data since one-hot encoded data is no longer binary. 
+
+- **Not Scaling:** Mathematically not as good for ML models as not all variables are on the exact same scale. However,
+the model is easier to interpret since one-hot encoding is preserved.
+   - The model won't break if you don't scale.
+   - Scaling only non-dummy variables will typically leave them on a range of -1 to 1, which is the in the same
+   order of magnitude as binary and one-hot encodings. With this in mind the negative impact of not scaling one-hot variables
+   is probably very low.
+
+### Do we need to apply scaling on the dependent variable `y`?
+
+- If `y` is categorical (i.e. a classification problem), then NO.
+- If `y` is numerical (i.e. a regression problem), then YES.
+
+### Code
+```python
+from sklearn.preprocessing import StandardScaler
+sc_X = StandardScaler()
+# IMPORTANT: the scaler must be fitted with the training data only. Transfromation of the test and prediction sets
+# Must be done with the scaler fitted with the training data.
+# This scaler scales one-hot variables
+X_train = sc_X.fit_transform(X_train)
+X_test = sc_X.transform(X_test)
+```

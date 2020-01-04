@@ -5,12 +5,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
+
 # Import the dataset
 data_path = 'annotated-code/Part 1 - Data Preprocessing/Section 2 -------------------- Part 1 - Data Preprocessing --------------------/Data.csv'
 dataset = pd.read_csv(data_path)
 # iloc allows us to locate columns by their index in Pandas dataframes
 X = dataset.iloc[:, :-1].values  # All Rows, All Columns except last one
 y = dataset.iloc[:, 3].values
+
 
 # Handling Missing Data
 from sklearn.impute import SimpleImputer
@@ -41,8 +43,19 @@ from sklearn.preprocessing import LabelEncoder
 labelencoder_y = LabelEncoder()
 y = labelencoder_y.fit_transform(y)
 
+
 # Splitting the Dataset into the Training set and Test set
 from sklearn.model_selection import train_test_split
 # random_state is fixed here just to make sure the results match the ones in the udemy course,
 # we wouldn't fix a random_state in regular circumstances
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state = 0)
+
+
+# Feature Scaling
+from sklearn.preprocessing import StandardScaler
+sc_X = StandardScaler()
+# IMPORTANT: the scaler must be fitted with the training data only. Transfromation of the test and prediction sets
+# Must be done with the scaler fitted with the training data.
+# This scaler scales one-hot variables
+X_train = sc_X.fit_transform(X_train)
+X_test = sc_X.transform(X_test)
