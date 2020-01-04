@@ -52,6 +52,8 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 
 # Feature Scaling
+# Many models in `scikitlearn` do feature scaling on their own, so we don't need to manually do it. Check the model for more info.
+# The code below shows how to do it manually in case it is needed.
 from sklearn.preprocessing import StandardScaler
 sc_X = StandardScaler()
 # IMPORTANT: the scaler must be fitted with the training data only. Transfromation of the test and prediction sets

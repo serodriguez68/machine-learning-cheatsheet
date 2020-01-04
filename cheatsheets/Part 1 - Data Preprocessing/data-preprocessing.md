@@ -157,7 +157,10 @@ the model is easier to interpret since one-hot encoding is preserved.
 - If `y` is numerical (i.e. a regression problem), then YES.
 
 ### Code
-```python
+**IMPORTANT:** Many models in `scikitlearn` do feature scaling on their own, so we don't need to manually do it. 
+Check the model for more info. The code below shows how to do it manually in case it is needed.
+
+```python 
 from sklearn.preprocessing import StandardScaler
 sc_X = StandardScaler()
 # IMPORTANT: the scaler must be fitted with the training data only. Transfromation of the test and prediction sets
