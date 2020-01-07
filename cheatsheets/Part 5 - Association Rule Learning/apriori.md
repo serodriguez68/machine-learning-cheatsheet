@@ -29,7 +29,10 @@ How likely it is for a person to buy `Y` given that he bought `X`.
 
 #### Lift
 
-How much more likely is it to find items in `X` and `Y` together (numerator), than by random chance (denominator).  
+How much more likely is it to find items in `X` and `Y` together (numerator), than by random chance (denominator).
+
+An alternative interpretation is _"it is `lift` times more likely to see `Y` in a basket that has `X` (`P(Y|X)`), than 
+it is to see `Y` (`P(Y)`)"_   
 
 `lift(X -> Y) = P(X,Y) / [P(X) * P(Y)] = P(Y|X) / P(Y)`
 
