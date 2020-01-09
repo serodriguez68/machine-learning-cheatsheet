@@ -29,7 +29,8 @@ How likely it is for a person to buy `Y` given that he bought `X`.
 
 #### Lift
 
-How much more likely is it to find items in `X` and `Y` together (numerator), than by random chance (denominator).
+How much more likely is it to find items in `X` and `Y` together (numerator), than by random chance if they were
+ completely independent from each other (denominator) (not associated at all).
 
 An alternative interpretation is _"it is `lift` times more likely to see `Y` in a basket that has `X` (`P(Y|X)`), than 
 it is to see `Y` (`P(Y)`)"_   
@@ -89,6 +90,37 @@ this rule is not really generalizable because it was mostly influenced by Peter.
 `Apriori` is a simple way of creating a basic recommender system. However, world-class recommender systems
 use much more complex models that may use `apriori` data as part of their features.
     
+### Finding the "interesting" rules
+
+
+Depending on what we are trying to achieve, many times we might only be interested in the "interesting" or "surprising" rules.
+However, defining how "surprising" is a rule requires domain knowledge most of the time.
+
+- `Lift` is an attempt to codify how "interesting" a rule is. But this is not the only way to do it.
+  - Another common metric of "interest" is `Leverage`, defined as `Leverage(X,Y) = P(X,Y) - P(X)*P(Y)`
+- In practice, `Lift` or any other measure of "interest" are used as a starting point, but data scientists and
+business users tend to have to go over large lists of rules filtering out the (typically many) unsurprising ones.
+
+Unsurprising rules also have many valid business applications, like seeding automated recommender systems or helping
+make logistic decisions.  
+
+### Business Applications
+
+[Provost and Fawcett](https://www.amazon.com/Data-Science-Business-Data-Analytic-Thinking-ebook/dp/B00E6EQ3X4/ref=sr_1_1?keywords=data+science&qid=1578569378&sr=8-1)
+have a great chapter about business applications of association rule mining.
+
+Some of the applications mentioned are: 
+- Increase Revenue through cross-selling. "customers that bought X" => "also bought Y"
+- Improve buying experience or increase customer satisfaction with the brand. "If buying X" => "It might be a good idea to buy Y for a better experience".
+- Reduce delivery costs by making better warehousing decisions and placing associated products on the same warehouse. 
+  - E.g. if X => Y and X is a high rotation product, it might be a good idea to keep stock
+of both X and Y on the regional warehouses to reduce shipping costs.
+- The input to the association rule algorithms might be augmented with customer attributes (aka _virtual items_) to
+find interesting associations between those attributes and the items.
+  - e.g. if studying the associations of what people like on social media, we could consider that each user
+  has a transaction filled with "liked" items. Then we can augment the data with the user's "location / gender / age" to find
+  associations between their "attributes" and what they "like". 
+
 
 ## Code
 We are going to use this implementation of the `apriori` algorithm: https://github.com/ymoch/apyori
