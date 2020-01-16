@@ -128,9 +128,14 @@ The implementation is also available through `pip`.
 
 A good documentation for `apyori` can be found here: https://zaxrosenberg.com/unofficial-apyori-documentation/
 
+The `apyori` implementation of the algorithm is capable of generating rules from SETS of X -> SETS of Y. Not
+all implementations of the apriori algorithm are capable of doing that. For example, in Knemi, the basic implementation
+of apriori is restricted to SETS_of_X -> one_Y.
+
 Apyori has the following caveats:
 - The data is returned in a non-intuitive and messy data structure that needs some explanation. The link above contains
 a good explanation of it.
 - The rules are not sorted in any order by default, it is up to us to sort them by lift.
+
 
 [Go here to see a full example.](/annotated-code/Part%205%20-%20Association%20Rule%20Learning/Section%2028%20-%20Apriori/apriori_analysis.py)
