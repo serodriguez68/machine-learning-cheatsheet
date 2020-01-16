@@ -123,11 +123,14 @@ find interesting associations between those attributes and the items.
 
 
 ## Code
-We are going to use this implementation of the `apriori` algorithm: https://github.com/ymoch/apyori
+The  Udemy course suggest the following implementation of the `apriori` algorithm: https://github.com/ymoch/apyori
 The implementation is also available through `pip`.
 
+A good documentation for `apyori` can be found here: https://zaxrosenberg.com/unofficial-apyori-documentation/
+
 Apyori has the following caveats:
-- The data is returned in a very messy data structure
+- The data is returned in a non-intuitive and messy data structure that needs some explanation. The link above contains
+a good explanation of it.
 - The rules are not sorted in any order by default, it is up to us to sort them by lift.
 
 [Go here to see a full example.](/annotated-code/Part%205%20-%20Association%20Rule%20Learning/Section%2028%20-%20Apriori/apriori_analysis.py)

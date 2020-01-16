@@ -15,6 +15,14 @@ transactions = []
 for row in dataset_frame.values:
     transactions.append([item for item in row if not pd.isnull(item)])
 
+# Dummy test data
+# transactions = [
+#     ['bread', 'milk'],
+#     ['bread', 'diaper', 'beer', 'eggs'],
+#     ['milk', 'diaper', 'beer', 'coke'],
+#     ['milk', 'diaper', 'beer', 'bread'],
+#     ['milk', 'diaper', 'bread', 'coke']
+# ]
 
 # Use the Apyori library
 import sys # needed in this particular project to find the baked in apyori library
@@ -27,16 +35,17 @@ unordered_rules = list(rules_generator)
 
 
 # Clean and sort the rules
-# Apyori returns the rules in a messy data structure, this cleans it up
+# Apyori returns the rules in a non-intuitive and nested data structure, this flattens it up
 cleaned_rules = []
-for rule in unordered_rules:
-    cleaned_rules.append({
-        'items_base': rule.ordered_statistics[0].items_base,
-        'items_add': rule.ordered_statistics[0].items_add,
-        'support': rule.support,
-        'confidence': rule.ordered_statistics[0].confidence,
-        'lift': rule.ordered_statistics[0].lift
-    })
+for itemset in unordered_rules:
+    for rule in itemset.ordered_statistics:
+        cleaned_rules.append({
+            'items_base': rule.items_base,
+            'items_add': rule.items_add,
+            'support': itemset.support,
+            'confidence': rule.confidence,
+            'lift': rule.lift
+        })
 from operator import itemgetter
 cleaned_sorted_rules = sorted(cleaned_rules, key=itemgetter('lift'), reverse=True)
 
