@@ -44,6 +44,15 @@ it is to see `Y` (`P(Y)`)"_
   - There is some negate association between X and Y. e.g. if you are buying a fertility treatment, you are not buying condoms.
 - Lift is a symmetrical function: `lift(X -> Y) = lift(Y -> X)`
 
+#### Closed frequent and Maximal itemsets
+The terms _closed frequent_ and _maximal_ itemsets are ofter mentioned in the context of rule learning.
+
+Note that this concepts are STRICTLY related to the *Frequent Itemsets* and NOT to the rules. When frequent itemset
+lists are too large, these concepts help for storing a "compressed" version of that list from which all of the 
+complete *frequent itemset* information can be derived.  Here are 2 useful resources to know more about this:
+- https://www.youtube.com/watch?v=YCgCl_Dsjrw
+- https://www-users.cs.umn.edu/~kumar001/dmbook/ch6.pdf
+
 ### Steps
 
 Among all the possible items we sell / movies we offer, we want to find the rules that have the highest (or lowest) lift
