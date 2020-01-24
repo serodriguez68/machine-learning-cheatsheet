@@ -34,3 +34,25 @@ variant so __we just need to make sure that we are using uses the _kmeans++_ var
 - Scikit-learn has a K-Means implementation that uses k-means++ by default.
 - Weka contains k-means (with optional k-means++) and x-means clustering.
 - Notably, at the time of this writing [Knime did not have the kmeans++ algorithm](https://forum.knime.com/t/accuracy-of-k-means-clustering/12721).
+
+### Choosing the right number of clusters
+
+To choose the right number of clusters we calculate and plot the _within cluster sum of squares (WCSS)_ metric across different
+kmeans runs using different _number of clusters_.
+
+We then use the use the plot to "eye-ball" the "elbow", which indicates us a good __candidate__ for the number of 
+clusters.
+
+![wcss definition](WCSS-definition.png)
+_WCSS definition_
+
+![elbow method](elbow-method.png)
+_The elbow method_
+
+Here are some important things to consider:
+- For some problems, the number of clusters (or an acceptable range) is given by the domain itself.
+- WCSS is a function that always decreases. For example, if we have 50 points and 50 clusters the WCSS is 0. We don't 
+strive to get the minimum WCSS, we want to balance the number clusters with the minimum WCSS.
+- The "elbow" method is an "eye-ball method". We can use it to get a starting point on the _number of clusters_, but
+ultimately we need to plot the results of clustering with different number of Ks and make __a judgement call__ on what makes
+sense for the given problem. 
