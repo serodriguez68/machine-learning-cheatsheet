@@ -12,6 +12,7 @@ using the given _definition of distance_.
  A gif is worth a million words:
  ![k-means clustering intuition](k_means_clustering_intuition.gif)
 
+K-means is considered relatively fast as its main operation is only computing distances between each point an the centroids.
 
 ### Hyper-parameters
 1. Number of clusters.
@@ -58,8 +59,99 @@ strive to get the minimum WCSS, we want to balance the number clusters with the 
 ultimately we need to plot the results of clustering with different number of Ks and make __a judgement call__ on what makes
 sense for the given problem.
 
+
+### Visualization of high-dimensional data
+For visualization of high-dimensional problems, we can use dimensionality reduction techniques like
+PCA or LDA to project the problem into 2 dimensions and then plot it.
+  
+
 ## Code
+
 [Go here to see a full example.](/annotated-code/Part%204%20-%20Clustering/Section%2024%20-%20K-Means%20Clustering/kmeans.py)
 
-Note that for visualization of high-dimensional problems, we can use dimensionality reduction techniques like
-PCA or LDA to project the problem into 2 dimensions and then plot it.
+## Applications
+
+- It is used a general tool for data exploration and discoveries, in which the objective is to understand the
+problem or the business better.
+- Market segmentation: Find natural groupings of customers.
+- "Find a similar Whiskey". If we had all whiskeys clustered by flavour, given one whiskey we
+could recommend similar ones by looking in the same cluster.  
+
+## Interpretation
+
+Understanding what elements in a cluster __have in common__ and how each cluster __differs from the other__ are 
+critical pieces of information to understand the results of clustering.
+
+Depending on the problem, some times we focus on __commonalities__ and some others in __differences__.
+
+
+### Understanding the internal characteristics of each cluster (commonalities)
+
+We generate __characteristic cluster descriptions__ to illustrate the commonalities of the data points in each cluster.
+This means that our focus is on determining how elements in a cluster are similar to the other elements, and not on how
+the cluster differ from the other clusters. These are some general techniques that can be used for 
+generating __characteristic cluster descriptions__:
+ 
+- Label each data point using some __meaningful label__ according to the problem, and then sample some of the data 
+points in the cluster.  For example, if we are clustering credit card information, the _customer name_ is probably 
+not a very informative label for each point. However, the average spend and credit score could be very meaningful. 
+Labelling does not have to be done with attributes used in the clustering algorithm (external info can also be used).
+- Point out an __"exemplar"__ data-point in each cluster.  For example, the highest rated wine in the cluster or the
+customer with the most orders.
+- Show the __average characteristics__ (the values at the centroid) for each cluster. This does not have to be
+using all attributes used for clustering, just the ones that are more meaningful. 
+
+Here is an example of a cluster description using these techniques:
+```text
+Group A
+• Scotches: Aberfeldy, Glenugie, Laphroaig, Scapa
+• The best of its class: Laphroaig (Islay), 10 years, 86 points
+• Average characteristics: full gold; fruity, salty; medium; oily, salty, sherry; dry
+```
+
+### Understanding how each cluster differs from the others using classification
+
+We can use classification techniques to automatically detect how clusters __differ from each other__. The core of 
+classification is finding differences after all.
+
+The focus of this technique is __differentiating between clusters__, and therefore it does not tell much about
+what the members of each cluster have in common.
+ 
+
+- There are 2 ways of framing the problem:
+    - Frame it as one classification problem with k classes.
+    - Frame it as _k_ binary classification problems with classes _j_ and _not j_ (all others). In each, problem we want 
+    to tell how cluster _j_  is _different_ from all other clusters.    
+- Regardless of the framing we use, we need to use __highly interpretable__ classifiers to be able to extract 
+the information we want. (Yes: decision trees, No: Neural Networks).
+
+Here is an example of how the binary framing and a decision tree can be used to generate a differential description
+of cluster _j_.
+
+![cluser description using classification](cluster-description-using-classification.png)
+```text
+1. (ROUND_BODY = Yes) AND (NOSE_SHERRY = Yes) ⇒ J
+OR
+2. (ROUND_BODY = No) AND (color_red = No) AND (color_f.gold = Yes) AND
+(BODY_light = Yes) AND (FIN_dry = Yes) ⇒ J
+
+Which in English can be interpreted as:
+1. A round body and a sherry nose.
+OR
+2. A full gold (but not red) color with a light (but not round) body and a dry finish.
+```
+
+
+### Interpretation difficulties
+- In clustering, it is often difficult to understand what the clusters reveal (if anything). And even if clustering
+reveals interesting information, it is often not clear how to use it to make better decisions. Business knowledge
+and creativity are key to overcome this.
+   - For example, clustering can be the first step for defining the classes of what later can become a classification
+   problem (see Provost, pg 184 for an example). 
+- In a clustering exercise, not all clusters have to be interesting. Sometimes, only a _subset_ of the clusters
+are cohesive and interesting. Having some uninteresting clusters is ok and expected.
+- _Syntactic or structural similarity is not semantic similarity_: in some problems, particularly when clustering
+text, data points get clustered together because they are _syntactically or structurally_ similar. For example,
+among a large corpus of news articles, all one-liner news get clustered together just because they are one-liners.
+This does not necessarily mean that they are related to the same topic. Syntactic / structural similarity is
+sometimes an interesting finding and sometimes not, depends on the problem.
