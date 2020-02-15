@@ -16,6 +16,8 @@ Note that the cheat sheet is not intended to be a replacement for the course.
 
 This is a WIP and it will take a while. This TOC contains the cheat sheets that have been finalized.
 - [Part 1 - Data Preprocessing](cheatsheets/Part%201%20-%20Data%20Preprocessing/data-preprocessing.md)
+- Part 4 - Clustering
+  - [K-means Clustering](cheatsheets/Part%204%20-%20Clustering/k_means_clustering.md)
 - Part 5 - Association Rule Learning
   - [Apriori](cheatsheets/Part%205%20-%20Association%20Rule%20Learning/apriori.md)
   - [Eclat](cheatsheets/Part%205%20-%20Association%20Rule%20Learning/eclat.md)
