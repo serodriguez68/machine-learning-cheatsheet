@@ -71,7 +71,7 @@ PCA or LDA to project the problem into 2 dimensions and then plot it.
 
 ## Applications
 
-- It is used a general tool for data exploration and discoveries, in which the objective is to understand the
+- It is used a general tool for data exploration and discovery, in which the objective is to understand the
 problem or the business better.
 - Market segmentation: Find natural groupings of customers.
 - "Find a similar Whiskey". If we had all whiskeys clustered by flavour, given one whiskey we
@@ -82,7 +82,7 @@ could recommend similar ones by looking in the same cluster.
 Understanding what elements in a cluster __have in common__ and how each cluster __differs from the other__ are 
 critical pieces of information to understand the results of clustering.
 
-Depending on the problem, some times we focus on __commonalities__ and some others in __differences__.
+Depending on the problem, sometimes we focus on __commonalities__ and some others in __differences__.
 
 
 ### Understanding the internal characteristics of each cluster (commonalities)
@@ -92,7 +92,7 @@ This means that our focus is on determining how elements in a cluster are simila
 the cluster differ from the other clusters. These are some general techniques that can be used for 
 generating __characteristic cluster descriptions__:
  
-- Label each data point using some __meaningful label__ according to the problem, and then sample some of the data 
+- Label each data point using some __meaningful label__ according to the problem and then sample some of the data 
 points in the cluster.  For example, if we are clustering credit card information, the _customer name_ is probably 
 not a very informative label for each point. However, the average spend and credit score could be very meaningful. 
 Labelling does not have to be done with attributes used in the clustering algorithm (external info can also be used).
