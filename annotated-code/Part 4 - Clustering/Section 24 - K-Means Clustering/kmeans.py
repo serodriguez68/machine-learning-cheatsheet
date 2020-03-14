@@ -25,7 +25,6 @@ plt.ylabel('WCSS')
 plt.show()
 n_clusters_opt = 5 # By eyeballing the graph, we conclude that the optimal number of clusters is 5
 
-
 # Apply k-means to the dataset using the optimal number of clusters
 kmeans = KMeans(n_clusters=n_clusters_opt, init='k-means++', max_iter=300, random_state=0)
 # kmeans.fit_predict returns the an array with shape [n_samples, 1] with the cluster to where each observation belongs
